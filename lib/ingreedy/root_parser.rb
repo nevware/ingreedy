@@ -25,6 +25,7 @@ module Ingreedy
     end
 
     rule(:unit) do
+      
       if unit_matches.any?
         unit_matches.map { |u| str(u) }.inject(:|)
       else
@@ -90,8 +91,15 @@ module Ingreedy
         quantity
     end
 
+    rule(:no_quantity) do
+      # e.g. olive oil 
+      # e.g. salt and pepper
+      ((whitespace >> quantity).absent? >> any).repeat.as(:ingredient) 
+
+    end
+
     rule(:ingredient_addition) do
-      standard_format | reverse_format
+      standard_format | reverse_format | no_quantity
     end
 
     root :ingredient_addition
@@ -101,6 +109,7 @@ module Ingreedy
     end
 
     def parse
+  
       super(original_query)
     end
 

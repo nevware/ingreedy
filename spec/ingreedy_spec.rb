@@ -11,6 +11,27 @@ describe Ingreedy, ".parse" do
   end
 end
 
+describe Ingreedy, ".parse" do
+  it "parses an example with a leading quantity plus weight correctly" do
+    result = Ingreedy.parse("1 x 2kg/4lb 8oz leg of lamb")
+
+    expect(result.amount).to eq(1)
+    expect(result.unit).to eq(:each)
+    expect(result.ingredient).to eq("2kg/4lb 8oz leg of lamb")
+  end
+end
+
+describe Ingreedy, ".parse" do
+  it "parses an example with a small bunch" do
+    result = Ingreedy.parse("small bunch oregano, leaves picked")
+
+    expect(result.amount).to eq(nil)
+    expect(result.unit).to eq(:bunch)
+    expect(result.ingredient).to eq("oregano, leaves picked")
+  end
+end
+
+
 describe Ingreedy, "amount parsing" do
   {
     "1 cup flour" => 1,
@@ -402,10 +423,18 @@ describe Ingreedy, "ingredient formatting" do
   end
 end
 
-describe Ingreedy, "error handling" do
-  it "wraps Parslet exceptions in a custom exception" do
-    expect do
-      Ingreedy.parse("nonsense")
-    end.to raise_error Ingreedy::ParseFailed
+# This test is no longer valid - "salt" is a valid ingredient. 
+
+#describe Ingreedy, "error handling" do
+#  it "wraps Parslet exceptions in a custom exception" do
+#    expect do
+#      Ingreedy.parse("nonsense")
+#    end.to raise_error Ingreedy::ParseFailed
+#  end
+# end
+
+describe Ingreedy, "ingredient formatting" do
+  it "handles ingredients without quantities" do
+    expect(Ingreedy.parse("salt and pepper").ingredient).to eq("salt and pepper")
   end
 end

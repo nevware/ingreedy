@@ -1,4 +1,10 @@
 :units:
+  :each:
+    - "x"
+  :bunch:
+    - "bunch"
+    - "small bunch"
+    - "large bunch"
   :cup:
     - "cups"
     - "cup"
@@ -112,6 +118,7 @@
     - "can"
   :to_taste:
     - "to taste"
+    - "sea salt and black pepper"
 :numbers:
   a: 1
   an: 1
